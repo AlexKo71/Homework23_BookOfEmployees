@@ -1,5 +1,6 @@
 package pro.sky.homework23_bookofemployees;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +24,14 @@ public class EmployeeController {
                                               @RequestParam(value = "department") int department,
                                               @RequestParam(value = "salary") int salary) {
         try {
+            if (!StringUtils.isAlpha(firstName + lastName)) {
+                throw new DataIsNotValidated();
+            }
             return ResponseEntity.ok(service.addPersons(firstName, lastName, department, salary));
         } catch (EmployeeStorageIsFullException e) {
             return ResponseEntity.status(500).build();
         }
+
     }
 
     @GetMapping("/remove")

@@ -1,5 +1,6 @@
 package pro.sky.homework23_bookofemployees;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -12,7 +13,7 @@ public class EmployeeService {
 
     public Employee addPersons(String firstName, String lastName,int department, int salary) {
         String key = firstName + " " + lastName;
-        var data = new Employee(firstName, lastName, department, salary);
+        var data = new Employee(StringUtils.capitalize(firstName), StringUtils.capitalize(lastName), department, salary);
         if (employees.size() > 10) {
             throw new EmployeeStorageIsFullException("коллекция переполнена");
         }
